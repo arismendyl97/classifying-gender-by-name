@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/classifying-gender-by-name/training/mlruns/0/6ca4944cb42b461eabbbd2435b0ab1cf/artifacts
+end_time: 1721013393663
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 6ca4944cb42b461eabbbd2435b0ab1cf
+run_name: merciful-lynx-381
+run_uuid: 6ca4944cb42b461eabbbd2435b0ab1cf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1721013280061
+status: 3
+tags: []
+user_id: codespace

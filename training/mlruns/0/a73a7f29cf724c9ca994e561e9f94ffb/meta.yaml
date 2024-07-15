@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/classifying-gender-by-name/training/mlruns/0/a73a7f29cf724c9ca994e561e9f94ffb/artifacts
+end_time: 1721013153501
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a73a7f29cf724c9ca994e561e9f94ffb
+run_name: bald-hen-501
+run_uuid: a73a7f29cf724c9ca994e561e9f94ffb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1721013038355
+status: 3
+tags: []
+user_id: codespace

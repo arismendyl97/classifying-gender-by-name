@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/classifying-gender-by-name/training/mlruns/0/3bb66189a1584931bcf9d7c0ba3bf0d9/artifacts
+end_time: 1721013280059
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 3bb66189a1584931bcf9d7c0ba3bf0d9
+run_name: skittish-frog-170
+run_uuid: 3bb66189a1584931bcf9d7c0ba3bf0d9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1721013153503
+status: 3
+tags: []
+user_id: codespace
