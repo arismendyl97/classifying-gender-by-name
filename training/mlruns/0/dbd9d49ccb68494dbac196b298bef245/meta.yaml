@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/classifying-gender-by-name/training/mlruns/0/dbd9d49ccb68494dbac196b298bef245/artifacts
+end_time: 1722641881005
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: dbd9d49ccb68494dbac196b298bef245
+run_name: likeable-sponge-238
+run_uuid: dbd9d49ccb68494dbac196b298bef245
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722641757165
+status: 3
+tags: []
+user_id: codespace

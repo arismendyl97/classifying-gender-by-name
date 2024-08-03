@@ -60,7 +60,7 @@ The project is organized into three main folders:
 
 3. **training**
    - Contains the `training_model.ipynb` file which is responsible for training the LSTM model. The training process is managed and tracked using MLflow.
-   - Once the training is complete, the best model is retrieved using the MLflow API in the `best_model.ipynb` file.
+   - Once the training is complete, the best model is registered using the MLflow API in the `best_model.ipynb` file. 
 
 ## Installation
 

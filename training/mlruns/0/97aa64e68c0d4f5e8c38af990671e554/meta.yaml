@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/classifying-gender-by-name/training/mlruns/0/97aa64e68c0d4f5e8c38af990671e554/artifacts
+end_time: 1722642127895
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 97aa64e68c0d4f5e8c38af990671e554
+run_name: aged-snail-929
+run_uuid: 97aa64e68c0d4f5e8c38af990671e554
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722642005466
+status: 3
+tags: []
+user_id: codespace
