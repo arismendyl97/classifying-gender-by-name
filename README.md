@@ -52,15 +52,15 @@ The project is organized into three main folders:
    - Contains six files with Spanish names and their corresponding gender. These files are used to build and validate the model.
 
 2. **data_cleaning**
-   - Contains a Python script named `prepare_dataset.ipynb` which reads the dataset and generates three files:
+   - Contains a Python script named `prepare_dataset.py` which reads the dataset and generates three files:
      - `spanish_names_db_training.csv`
      - `spanish_names_db_validation.csv`
      - `spanish_names_db_testing.csv`
    - This script ensures the dataset is clean and properly formatted for training, validation, and testing.
 
 3. **training**
-   - Contains the `training_model.ipynb` file which is responsible for training the LSTM model. The training process is managed and tracked using MLflow.
-   - Once the training is complete, the best model is registered using the MLflow API in the `best_model.ipynb` file. 
+   - Contains the `training_model.py` file which is responsible for training the LSTM model. The training process is managed and tracked using MLflow.
+   - Once the training is complete, the best model is registered using the MLflow API in the `best_model.py` file. 
 
 ## Installation
 
@@ -103,14 +103,14 @@ The project is organized into three main folders:
 
 1. **Prepare the Dataset**
    - Navigate to the `data_cleaning` folder.
-   - Run the `prepare_dataset.ipynb` script to generate the training, validation, and testing datasets.
+   - Run the `prepare_dataset.py` script to generate the training, validation, and testing datasets.
 
 2. **Train the Model**
    - Navigate to the `training` folder.
-   - Run the `training_model.ipynb` script to start training the LSTM model. The training process will be logged and monitored using MLflow.
+   - Run the `training_model.py` script to start training the LSTM model. The training process will be logged and monitored using MLflow.
 
 3. **Retrieve the Best Model**
-   - After training, run the `best_model.ipynb` script to retrieve and save the best-performing model using the MLflow API.
+   - After training, run the `best_model.py` script to retrieve and save the best-performing model using the MLflow API.
 
 ## Requirements
 
