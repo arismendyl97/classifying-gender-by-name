@@ -52,10 +52,11 @@ The project is organized into three main folders:
    - Contains six files with Spanish names and their corresponding gender. These files are used to build and validate the model.
 
 2. **data_cleaning**
-   - Contains a Python script named `prepare_dataset.py` which reads the dataset and generates three files:
+   - Contains a Python script named `prepare_dataset.py` which reads the dataset and generates four files:
      - `spanish_names_db_training.csv`
      - `spanish_names_db_validation.csv`
      - `spanish_names_db_testing.csv`
+     - `spanish names db - post_testing.csv`
    - This script ensures the dataset is clean and properly formatted for training, validation, and testing.
 
 3. **training**
