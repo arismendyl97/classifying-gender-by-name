@@ -53,9 +53,9 @@ The project is organized into three main folders:
 
 2. **data_cleaning**
    - Contains a Python script named `prepare_dataset.py` which reads the dataset and generates four files:
-     - `spanish_names_db_training.csv`
-     - `spanish_names_db_validation.csv`
-     - `spanish_names_db_testing.csv`
+     - `spanish names db - training.csv`
+     - `spanish names db - validation.csv`
+     - `spanish names db - testing.csv`
      - `spanish names db - post_testing.csv`
    - This script ensures the dataset is clean and properly formatted for training, validation, and testing.
 

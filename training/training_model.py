@@ -13,6 +13,9 @@ import mlflow.keras
 
 import pickle
 
+# Set the MLFlow tracking URI to a relative path
+mlflow.set_tracking_uri("file:../mlruns")
+
 # %%
 def create_model(embedding_dim=128, lstm_units=64, dropout_rate=0.5):
     model = Sequential()
@@ -93,6 +96,4 @@ for params in param_list:
 
         # Log hyperparameters
         mlflow.log_params(params)
-
-
-
+        mlflow.keras.log_model(model, "model")

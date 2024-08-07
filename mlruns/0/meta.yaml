@@ -1,6 +1,6 @@
-artifact_location: mlflow-artifacts:/0
-creation_time: 1722641195529
+artifact_location: file:///workspaces/classifying-gender-by-name/training/../mlruns/0
+creation_time: 1722996410518
 experiment_id: '0'
-last_update_time: 1722641195529
+last_update_time: 1722996410518
 lifecycle_stage: active
 name: Default

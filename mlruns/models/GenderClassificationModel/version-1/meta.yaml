@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1722997509927
+current_stage: None
+description: null
+last_updated_timestamp: 1722997509927
+name: GenderClassificationModel
+run_id: 0c35d49cc0814ebc81da9eaf401b5fcf
+run_link: null
+source: file:///workspaces/classifying-gender-by-name/training/../mlruns/0/0c35d49cc0814ebc81da9eaf401b5fcf/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///workspaces/classifying-gender-by-name/training/../mlruns/0/0c35d49cc0814ebc81da9eaf401b5fcf/artifacts/model
+user_id: null
+version: 1

@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/classifying-gender-by-name/training/../mlruns/0/0c35d49cc0814ebc81da9eaf401b5fcf/artifacts
+end_time: 1722996813389
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0c35d49cc0814ebc81da9eaf401b5fcf
+run_name: fun-hound-267
+run_uuid: 0c35d49cc0814ebc81da9eaf401b5fcf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722996410711
+status: 3
+tags: []
+user_id: codespace

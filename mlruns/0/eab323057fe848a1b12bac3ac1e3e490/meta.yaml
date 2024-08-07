@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/classifying-gender-by-name/training/../mlruns/0/eab323057fe848a1b12bac3ac1e3e490/artifacts
+end_time: 1722997305134
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: eab323057fe848a1b12bac3ac1e3e490
+run_name: illustrious-jay-599
+run_uuid: eab323057fe848a1b12bac3ac1e3e490
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722997193946
+status: 3
+tags: []
+user_id: codespace

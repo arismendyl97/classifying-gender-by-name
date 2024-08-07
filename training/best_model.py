@@ -6,6 +6,9 @@ import pickle
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+# Set the MLFlow tracking URI to a relative path
+mlflow.set_tracking_uri("file:../mlruns")
+
 # %%
 # Set the experiment name (or ID)
 experiment_name = "Default"  # Replace with your experiment name
@@ -78,5 +81,3 @@ prediction = best_model.predict(preprocessed_name)
 # Interpret the prediction
 gender = "Female" if prediction[0] > 0.5 else "Male"
 print(f"The predicted gender for the name '{name_to_predict}' is {gender}.")
-
-

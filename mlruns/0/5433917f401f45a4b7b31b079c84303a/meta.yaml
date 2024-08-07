@@ -1,0 +1,15 @@
+artifact_uri: file:///workspaces/classifying-gender-by-name/training/../mlruns/0/5433917f401f45a4b7b31b079c84303a/artifacts
+end_time: 1722997079648
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5433917f401f45a4b7b31b079c84303a
+run_name: gregarious-goose-692
+run_uuid: 5433917f401f45a4b7b31b079c84303a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722996968096
+status: 3
+tags: []
+user_id: codespace
