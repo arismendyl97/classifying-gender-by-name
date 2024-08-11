@@ -5,6 +5,9 @@ import prometheus_client
 from prometheus_client import Counter
 import threading
 
+import pickle
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
 # Set the MLFlow tracking URI to a relative path
 mlflow.set_tracking_uri("file:./mlruns")
 
@@ -14,7 +17,12 @@ def load_model(model_name: str, model_version: int):
     model = mlflow.keras.load_model(model_uri=model_uri)
     return model
 
-def create_flask_app(model):
+def preprocess_name(name, tokenizer, max_sequence_length):
+    sequence = tokenizer.texts_to_sequences([name])
+    padded_sequence = pad_sequences(sequence, maxlen=max_sequence_length)
+    return padded_sequence
+
+def create_flask_app(model, tokenizer, max_sequence_length):
     app = Flask(__name__)
 
     # Create a counter to track the number of predictions
@@ -23,9 +31,21 @@ def create_flask_app(model):
     @app.route('/predict', methods=['POST'])
     def predict():
         data = request.json
-        predictions = model.predict(data['instances'])
+        name = data.get('name')
+        if not name:
+            return jsonify({'error': 'No name provided'}), 400
+        
+        # Process the name to fit the model's input requirements
+        processed_name = preprocess_name(name, tokenizer, max_sequence_length)
+
+        predictions = model.predict(processed_name)
         prediction_counter.inc()  # Increment the prediction counter
-        return jsonify(predictions.tolist())
+        
+        predictionsList = predictions.tolist()[0]
+        predictions = ["Female" if item > 0.5 else "Male" for item in predictionsList]
+
+        # Return the prediction result
+        return jsonify({'predictions': predictions})
 
     @app.route('/metrics')
     def metrics():
@@ -33,22 +53,29 @@ def create_flask_app(model):
 
     return app
 
-def run_flask_app(model):
-    app = create_flask_app(model)
+def run_flask_app(model, tokenizer, max_sequence_length):
+    app = create_flask_app(model, tokenizer, max_sequence_length)
     app.run(host='0.0.0.0', port=1500)
 
 @task
-def start_flask_app(model):
-    thread = threading.Thread(target=run_flask_app, args=(model,))
+def start_flask_app(model, tokenizer, max_sequence_length):
+    thread = threading.Thread(target=run_flask_app, args=(model, tokenizer, max_sequence_length))
     thread.start()
     return thread
 
 @flow(name="model-serving")
-def model_serving_flow(model_name: str, model_version: int):
+def model_serving_flow(model_name: str, model_version: int, tokenizer, max_sequence_length):
     model = load_model(model_name, model_version)
-    start_flask_app(model)
+    start_flask_app(model, tokenizer, max_sequence_length)
 
 if __name__ == "__main__":
     model_name = "GenderClassificationModel"
     model_version = 1
-    model_serving_flow(model_name, model_version)
+
+    with open('./training/tokenizer_info.pickle', 'rb') as handle:
+        tokenizer_info = pickle.load(handle)
+
+    tokenizer = tokenizer_info['tokenizer']
+    max_sequence_length = tokenizer_info['max_sequence_length']
+
+    model_serving_flow(model_name, model_version, tokenizer, max_sequence_length)
