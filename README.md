@@ -113,6 +113,28 @@ The project is organized into three main folders:
 3. **Retrieve the Best Model**
    - After training, run the `best_model.py` script to retrieve and save the best-performing model using the MLflow API.
 
+4. **Model Serving with Flask and Evidently `flow.py`**
+
+   - The `flow.py` sets up a model serving application using Flask, MLflow, and Evidently for monitoring. The service predicts gender based on names using the LSTM model registered in MLflow and includes a data drift monitoring feature.
+
+      - **Flask API:** Provides a REST API for predictions:
+      - **`/predict`**: Accepts POST requests with a name, processes it, and returns gender predictions.
+      - **`/drift_report`**: Returns a data drift report (assumes it's configured).
+      - **Data Drift Monitoring:** Uses Evidently to monitor data drift, although it's not directly exposed through the API in this code.
+      - **Multithreaded Execution:** Runs the Flask app in a separate thread to ensure non-blocking operations.
+      - **Application Execution:** Uses Prefect to orchestrate the loading of the model and starting of the Flask application.
+
+### **Installation and Running**
+
+1. Clone this repository.
+2. Ensure Docker is installed for containerized environments.
+3. Build and start the services with Docker Compose:
+   ```bash
+   docker-compose up --build
+   ```
+4. The Flask app will be available at `http://localhost:4500`.
+
+
 ## Requirements
 
 - Python 3.11.9
