@@ -118,21 +118,43 @@ The project is organized into three main folders:
    - The `flow.py` sets up a model serving application using Flask, MLflow, and Evidently for monitoring. The service predicts gender based on names using the LSTM model registered in MLflow and includes a data drift monitoring feature.
 
       - **Flask API:** Provides a REST API for predictions:
-      - **`/predict`**: Accepts POST requests with a name, processes it, and returns gender predictions.
-      - **`/drift_report`**: Returns a data drift report (assumes it's configured).
+         - **`/predict`**: Accepts POST requests with a name, processes it, and returns gender predictions.
+         - **`/drift_report`**: Returns a data drift report (assumes it's configured).
       - **Data Drift Monitoring:** Uses Evidently to monitor data drift, although it's not directly exposed through the API in this code.
       - **Multithreaded Execution:** Runs the Flask app in a separate thread to ensure non-blocking operations.
       - **Application Execution:** Uses Prefect to orchestrate the loading of the model and starting of the Flask application.
 
-### **Installation and Running**
 
-1. Clone this repository.
-2. Ensure Docker is installed for containerized environments.
-3. Build and start the services with Docker Compose:
+### **Installation and Running - DOCKER**
+
+This project is Dockerized and includes all necessary Python dependencies, as well as Grafana and Prometheus for monitoring model performance. Follow these steps to set up and run the application:
+
+1. **Build and Run the Docker Containers**
+
+   Use Docker Compose to build and start the containers. This will install all Python dependencies and set up Grafana and Prometheus.
+
    ```bash
    docker-compose up --build
    ```
-4. The Flask app will be available at `http://localhost:4500`.
+
+   This command will:
+
+   - Build Docker images for the Flask application, Grafana, and Prometheus.
+   - Start containers for each service.
+   - Install Python requirements and configure the environment.
+
+2. **Access the Application**
+
+   - The Flask application will be accessible at `http://localhost:1500`.
+   - Grafana will be available at `http://localhost:3000` (default credentials: admin/admin).
+   - Prometheus will be available at `http://localhost:9090`.
+
+3. **Monitoring**
+
+   - **Grafana**: The Docker setup includes a basic Grafana configuration to monitor model metrics.
+   - **Prometheus**: The setup includes Prometheus for collecting and storing metrics. 
+
+   Ensure that Grafana and Prometheus are correctly configured to visualize the data from your model.
 
 
 ## Requirements
@@ -142,6 +164,9 @@ The project is organized into three main folders:
 - MLflow
 - Pandas
 - NumPy
+- Flask
+- Prometheus
+- Grafana
 
 ## License
 
