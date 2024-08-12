@@ -156,6 +156,18 @@ This project is Dockerized and includes all necessary Python dependencies, as we
 
    Ensure that Grafana and Prometheus are correctly configured to visualize the data from your model.
 
+4. **Testing the Endpoint**
+
+   Here's how you can test the endpoint:
+
+   #### Using `curl`
+
+   ```sh
+   curl -X POST http://localhost:5000/predict \
+   -H "Content-Type: application/json" \
+   -d '{"name": "Luis"}'
+   ```
+
 
 ## Requirements
 
