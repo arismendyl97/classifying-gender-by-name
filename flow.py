@@ -3,6 +3,8 @@ import mlflow.keras
 from flask import Flask, request, jsonify
 import prometheus_client
 from prometheus_client import Counter
+from evidently.report import Report
+from evidently.metric_preset import DataDriftPreset
 import threading
 
 import pickle
@@ -47,9 +49,13 @@ def create_flask_app(model, tokenizer, max_sequence_length):
         # Return the prediction result
         return jsonify({'predictions': predictions})
 
-    @app.route('/metrics')
-    def metrics():
-        return prometheus_client.generate_latest(), 200
+    # @app.route('/metrics')
+    # def metrics():
+    #     return prometheus_client.generate_latest(), 200
+    
+    @app.route('/drift_report')
+    def drift_report():
+        return data_drift_report.json()
 
     return app
 
@@ -69,6 +75,10 @@ def model_serving_flow(model_name: str, model_version: int, tokenizer, max_seque
     start_flask_app(model, tokenizer, max_sequence_length)
 
 if __name__ == "__main__":
+
+    # Initialize Evidently report for Data Drift
+    data_drift_report = Report(metrics=[DataDriftPreset()])
+
     model_name = "GenderClassificationModel"
     model_version = 1
 
