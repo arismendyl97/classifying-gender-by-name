@@ -145,7 +145,7 @@ This project is Dockerized and includes all necessary Python dependencies, as we
 
 2. **Access the Application**
 
-   - The Flask application will be accessible at `http://localhost:1500`.
+   - The Flask application will be accessible at `http://localhost:4500`.
    - Grafana will be available at `http://localhost:3000` (default credentials: admin/admin).
    - Prometheus will be available at `http://localhost:9090`.
 
@@ -163,7 +163,7 @@ This project is Dockerized and includes all necessary Python dependencies, as we
    #### Using `curl`
 
    ```sh
-   curl -X POST http://localhost:5000/predict \
+   curl -X POST http://localhost:4500/predict \
    -H "Content-Type: application/json" \
    -d '{"name": "Luis"}'
    ```
