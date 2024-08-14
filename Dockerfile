@@ -11,5 +11,10 @@ RUN pip install -r requirements.txt
 # Copy the Prefect flow script
 COPY flow.py /app/flow.py
 
+# Copy the Prefect flow script
+COPY ./mlruns /app/mlruns/
+
 # Command to run the Prefect flow
+CMD ["ls"]
+CMD ["cd", "./app/"]
 CMD ["python", "flow.py"]

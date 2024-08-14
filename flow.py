@@ -1,3 +1,4 @@
+import logging
 from prefect import flow, task
 import mlflow.keras
 from flask import Flask, request, jsonify
@@ -10,11 +11,21 @@ import threading
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-# Set the MLFlow tracking URI to a relative path
-mlflow.set_tracking_uri("file:./mlruns")
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,  # Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+)
+
+logger = logging.getLogger(__name__)
 
 @task
 def load_model(model_name: str, model_version: int):
+
+    # Set the MLFlow tracking URI to a relative path
+    mlflow.set_tracking_uri("file:./mlruns")
+    logger.info(f"Current Tracking URI: {mlflow.get_tracking_uri()}")
+    
     model_uri = f"models:/{model_name}/{model_version}"
     model = mlflow.keras.load_model(model_uri=model_uri)
     return model
@@ -61,7 +72,7 @@ def create_flask_app(model, tokenizer, max_sequence_length):
 
 def run_flask_app(model, tokenizer, max_sequence_length):
     app = create_flask_app(model, tokenizer, max_sequence_length)
-    app.run(host='0.0.0.0', port=1500)
+    app.run(host='0.0.0.0', port=4500)
 
 @task
 def start_flask_app(model, tokenizer, max_sequence_length):

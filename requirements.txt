@@ -28,6 +28,7 @@ deprecated==1.2.14
 dnspython==2.6.1
 docker==7.1.0
 email-validator==2.2.0
+evidently==0.4.35
 entrypoints==0.4
 flask==3.0.3
 flatbuffers==24.3.25
