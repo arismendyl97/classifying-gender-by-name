@@ -11,29 +11,31 @@ services:
       - "4500"
     # command: python flow.py
 
-#   prometheus:
-#     image: prom/prometheus
-#     volumes:
-#       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-#     ports:
-#       - "9090:9090"
-#     command:
-#       - '--config.file=/etc/prometheus/prometheus.yml'
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./app/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
 
-#   grafana:
-#     build:
-#       context: ./grafana
-#       dockerfile: Dockerfile
-#     ports:
-#       - "3000:3000"
-#     volumes:
-#       - ./grafana/dashboards:/var/lib/grafana/dashboards
-#       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-#     environment:
-#       - GF_SECURITY_ADMIN_USER=admin
-#       - GF_SECURITY_ADMIN_PASSWORD=admin
-#     depends_on:
-#       - prometheus
+  grafana:
+    build:
+      context: ./app/grafana
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./app/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./app/grafana/provisioning:/etc/grafana/provisioning
+      - ./app/grafana/grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
 
-# volumes:
-#   grafana_data:
+volumes:
+  grafana_data:

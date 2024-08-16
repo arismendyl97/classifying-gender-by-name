@@ -3,10 +3,11 @@ from prefect import flow, task
 import mlflow.keras
 from flask import Flask, request, jsonify
 import prometheus_client
-from prometheus_client import Counter
 from evidently.report import Report
 from evidently.metric_preset import DataDriftPreset
 import threading
+import pandas as pd
+import subprocess  # Import subprocess module for running the additional script
 
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -23,7 +24,7 @@ logger = logging.getLogger(__name__)
 def load_model(model_name: str, model_version: int):
 
     # Set the MLFlow tracking URI to a relative path
-    mlflow.set_tracking_uri("file:./mlruns")
+    mlflow.set_tracking_uri("file:../mlruns")
     logger.info(f"Current Tracking URI: {mlflow.get_tracking_uri()}")
     
     model_uri = f"models:/{model_name}/{model_version}"
@@ -38,9 +39,6 @@ def preprocess_name(name, tokenizer, max_sequence_length):
 def create_flask_app(model, tokenizer, max_sequence_length):
     app = Flask(__name__)
 
-    # Create a counter to track the number of predictions
-    prediction_counter = Counter('model_predictions_total', 'Total number of model predictions')
-
     @app.route('/predict', methods=['POST'])
     def predict():
         data = request.json
@@ -52,21 +50,25 @@ def create_flask_app(model, tokenizer, max_sequence_length):
         processed_name = preprocess_name(name, tokenizer, max_sequence_length)
 
         predictions = model.predict(processed_name)
-        prediction_counter.inc()  # Increment the prediction counter
         
         predictionsList = predictions.tolist()[0]
         predictions = ["Female" if item > 0.5 else "Male" for item in predictionsList]
 
+        newRow = {'name':name, 'predicted_gender': int(round(predictionsList[0]))}
+
+        # Append the new row to the DataFrame
+        current_data = current_data.append(newRow, ignore_index=True)
+
         # Return the prediction result
         return jsonify({'predictions': predictions})
 
-    # @app.route('/metrics')
-    # def metrics():
-    #     return prometheus_client.generate_latest(), 200
-    
     @app.route('/drift_report')
     def drift_report():
-        return data_drift_report.json()
+        # Here you'd pass your reference and current data to Evidently
+        data_drift_report.run(reference_data=reference_data, current_data=current_data)
+        drift_data = data_drift_report.as_dict()
+        # Expose the drift data in a format that Prometheus can scrape
+        return jsonify(drift_data)
 
     return app
 
@@ -85,10 +87,23 @@ def model_serving_flow(model_name: str, model_version: int, tokenizer, max_seque
     model = load_model(model_name, model_version)
     start_flask_app(model, tokenizer, max_sequence_length)
 
+    # Run the test script located at ./testing/test_prd_model.py
+    subprocess.run(['python', './testing/test_prd_model.py'], check=True)
+
 if __name__ == "__main__":
 
     # Initialize Evidently report for Data Drift
-    data_drift_report = Report(metrics=[DataDriftPreset()])
+    data_drift_report = Report(metrics=[
+        DataDriftPreset()
+    ])
+
+    reference_data = pd.read_csv("./testing/spanish names db & predictions.csv")
+    reference_data = reference_data[['name','predicted_gender']]
+
+    current_data = pd.DataFrame({
+        'name': [],
+        'predicted_gender': []
+    })
 
     model_name = "GenderClassificationModel"
     model_version = 1
