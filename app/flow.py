@@ -4,6 +4,7 @@ import mlflow.keras
 from flask import Flask, request, jsonify, Response
 from evidently import ColumnMapping
 from evidently.report import Report
+from evidently.tabs import DataDriftTab, TargetDriftTab
 from prometheus_client import Gauge, generate_latest, CollectorRegistry
 import threading
 import pandas as pd
@@ -110,10 +111,12 @@ if __name__ == "__main__":
     class_balance_metric = Gauge('class_balance', 'Class balance score', registry=registry)
 
     # Initialize an Evidently report focusing on data quality and drift
-    report = Report(tabs=[
-        "DataDriftTab", 
-        "TargetDriftTab"  # Include relevant tabs for the metrics you're tracking
-    ])
+    report = Report(
+        tabs=[
+            DataDriftTab(),
+            TargetDriftTab(),
+        ]
+    )
 
     reference_data = pd.read_csv("./testing/spanish names db & predictions.csv")
     reference_data = reference_data[['name','predicted_gender']]
