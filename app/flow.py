@@ -4,7 +4,7 @@ import mlflow.keras
 from flask import Flask, request, jsonify, Response
 from evidently import ColumnMapping
 from evidently.report import Report
-from evidently.tabs import DataDriftTab, TargetDriftTab
+from evidently.metrics import ColumnDriftMetric, DatasetDriftMetric
 from prometheus_client import Gauge, generate_latest, CollectorRegistry
 import threading
 import pandas as pd
@@ -23,7 +23,6 @@ logger = logging.getLogger(__name__)
 
 @task
 def load_model(model_name: str, model_version: int):
-
     # Set the MLFlow tracking URI to a relative path
     mlflow.set_tracking_uri("file:../mlruns")
     logger.info(f"Current Tracking URI: {mlflow.get_tracking_uri()}")
@@ -66,17 +65,15 @@ def create_flask_app(model, tokenizer, max_sequence_length):
 
     @app.route('/drift_report')
     def drift_report():
-
         # Run the report on the current data
         report.run(reference_data=reference_data, current_data=current_data)
 
         # Extract metrics from the report and update Prometheus metrics
-        # Assuming you extract data drift and class balance from the report
-        data_drift_score = report.as_dict()['metrics']['data_drift']['score']
-        class_balance_score = report.as_dict()['metrics']['class_balance']['score']
+        data_drift_metric_value = report.as_dict()["metrics"][0]["result"]["drift_score"]
+        dataset_drift_metric_value = report.as_dict()["metrics"][1]["result"]["drift_score"]
 
-        data_drift_metric.set(data_drift_score)
-        class_balance_metric.set(class_balance_score)
+        data_drift_metric.set(data_drift_metric_value)
+        class_balance_metric.set(dataset_drift_metric_value)
 
         # Return the Prometheus metrics as a Flask response
         return Response(generate_latest(registry), mimetype="text/plain")
@@ -112,9 +109,9 @@ if __name__ == "__main__":
 
     # Initialize an Evidently report focusing on data quality and drift
     report = Report(
-        tabs=[
-            DataDriftTab(),
-            TargetDriftTab(),
+        metrics=[
+            DatasetDriftMetric(),
+            ColumnDriftMetric(column_name="predicted_gender"),
         ]
     )
 
