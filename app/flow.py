@@ -1,10 +1,10 @@
 import logging
 from prefect import flow, task
 import mlflow.keras
-from flask import Flask, request, jsonify
-import prometheus_client
+from flask import Flask, request, jsonify, Response
+from evidently import ColumnMapping
 from evidently.report import Report
-from evidently.metric_preset import DataDriftPreset
+from evidently.monitoring import PrometheusMonitoring
 import threading
 import pandas as pd
 import subprocess  # Import subprocess module for running the additional script
@@ -65,11 +65,15 @@ def create_flask_app(model, tokenizer, max_sequence_length):
 
     @app.route('/drift_report')
     def drift_report():
-        # Here you'd pass your reference and current data to Evidently
-        data_drift_report.run(reference_data=reference_data, current_data=current_data)
-        drift_data = data_drift_report.as_dict()
-        # Expose the drift data in a format that Prometheus can scrape
-        return jsonify(drift_data)
+
+        # Run the report on the current data
+        report.run(reference_data=reference_data, current_data=current_data, column_mapping=column_mapping)
+
+        # Expose metrics to Prometheus
+        monitoring.export_metrics()
+
+        # Return the Prometheus metrics as a Flask response
+        return Response(monitoring.get_latest_metrics(), mimetype="text/plain")
 
     return app
 
@@ -93,9 +97,16 @@ def model_serving_flow(model_name: str, model_version: int, tokenizer, max_seque
 
 if __name__ == "__main__":
 
-    # Initialize Evidently report for Data Drift
-    data_drift_report = Report(metrics=[
-        DataDriftPreset()
+    # Initialize Prometheus monitoring
+    monitoring = PrometheusMonitoring()
+
+    # Example: Define a column mapping (customize as needed)
+    column_mapping = ColumnMapping()  # No target or prediction columns needed
+
+    # Initialize an Evidently report focusing on data quality and drift
+    report = Report(tabs=[
+        "DataDriftTab", 
+        "TargetDriftTab"  # Include relevant tabs for the metrics you're tracking
     ])
 
     reference_data = pd.read_csv("./testing/spanish names db & predictions.csv")
