@@ -4,7 +4,7 @@ import mlflow.keras
 from flask import Flask, request, jsonify, Response
 from evidently import ColumnMapping
 from evidently.report import Report
-from evidently.monitoring import PrometheusMonitoring
+from prometheus_client import Gauge, generate_latest, CollectorRegistry
 import threading
 import pandas as pd
 import subprocess  # Import subprocess module for running the additional script
@@ -67,13 +67,18 @@ def create_flask_app(model, tokenizer, max_sequence_length):
     def drift_report():
 
         # Run the report on the current data
-        report.run(reference_data=reference_data, current_data=current_data, column_mapping=column_mapping)
+        report.run(reference_data=reference_data, current_data=current_data)
 
-        # Expose metrics to Prometheus
-        monitoring.export_metrics()
+        # Extract metrics from the report and update Prometheus metrics
+        # Assuming you extract data drift and class balance from the report
+        data_drift_score = report.as_dict()['metrics']['data_drift']['score']
+        class_balance_score = report.as_dict()['metrics']['class_balance']['score']
+
+        data_drift_metric.set(data_drift_score)
+        class_balance_metric.set(class_balance_score)
 
         # Return the Prometheus metrics as a Flask response
-        return Response(monitoring.get_latest_metrics(), mimetype="text/plain")
+        return Response(generate_latest(registry), mimetype="text/plain")
 
     return app
 
@@ -97,11 +102,12 @@ def model_serving_flow(model_name: str, model_version: int, tokenizer, max_seque
 
 if __name__ == "__main__":
 
-    # Initialize Prometheus monitoring
-    monitoring = PrometheusMonitoring()
+    # Create a registry for Prometheus metrics
+    registry = CollectorRegistry()
 
-    # Example: Define a column mapping (customize as needed)
-    column_mapping = ColumnMapping()  # No target or prediction columns needed
+    # Define Prometheus metrics (e.g., for data drift)
+    data_drift_metric = Gauge('data_drift_score', 'Data drift score', registry=registry)
+    class_balance_metric = Gauge('class_balance', 'Class balance score', registry=registry)
 
     # Initialize an Evidently report focusing on data quality and drift
     report = Report(tabs=[
