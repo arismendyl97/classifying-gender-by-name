@@ -172,6 +172,67 @@ This project is Dockerized and includes all necessary Python dependencies, as we
    -d '{"name": "Luis"}'
    ```
 
+### **CLOUD - Deploying the Application on an AWS EC2 Instance Using CloudFormation**
+
+You can deploy this Dockerized application on an Amazon EC2 instance using an AWS CloudFormation stack. Follow these steps to set up and run the application in the cloud.
+
+### Prerequisites
+1. **AWS Account**: Ensure you have an AWS account and have configured your AWS CLI.
+2. **SSH Key Pair**: You need an EC2 key pair to access the instance. Create one in the AWS Management Console if you don't already have one.
+
+### Steps to Deploy
+
+1. **Clone the Repository**  
+   First, clone the repository to your local machine:
+
+   ```bash
+   git clone https://github.com/arismendyl97/classifying-gender-by-name.git
+   cd classifying-gender-by-name
+   ```
+
+2. **Modify the CloudFormation Template**  
+   In the `cloudformation` section of the repository, locate the `aws_ec2_cloud-docker-app.yaml` template and modify the following placeholders:
+   
+   - Replace `your-key-name` with the name of your EC2 key pair.
+   - Replace the GitHub repository URL (`https://github.com/your-github-username/your-repo.git`) with your actual GitHub repository URL.
+
+3. **Deploy the CloudFormation Stack**
+
+   Use the AWS CLI to deploy the CloudFormation stack:
+
+   ```bash
+   aws cloudformation create-stack \
+     --stack-name MyDockerAppStack \
+     --template-body file://cloudformation/aws_ec2_cloud-docker-app.yaml \
+     --capabilities CAPABILITY_IAM
+   ```
+
+   This command will:
+   - Provision a t2.micro EC2 instance.
+   - Install Docker and Docker Compose.
+   - Clone the repository and start your app using `docker-compose.yml`.
+
+4. **Access the Application**
+
+   Once the stack is deployed, you can access the Flask app using the public DNS of the EC2 instance. The outputs of the stack will provide the instance's public IP and DNS.
+
+   To view the outputs, run:
+
+   ```bash
+   aws cloudformation describe-stacks --stack-name MyDockerAppStack --query 'Stacks[0].Outputs'
+   ```
+
+   The application will be available at `http://<Public-DNS>:4500`, and you can access Grafana and Prometheus as usual:
+   - Grafana: `http://<Public-DNS>:3000`
+   - Prometheus: `http://<Public-DNS>:9090`
+
+### Teardown
+
+To delete the CloudFormation stack and the associated resources, run:
+
+```bash
+aws cloudformation delete-stack --stack-name MyDockerAppStack
+```
 
 ## Requirements
 
