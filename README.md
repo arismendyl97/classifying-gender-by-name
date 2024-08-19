@@ -175,7 +175,7 @@ This project is Dockerized and includes all necessary Python dependencies, as we
 
 3. **Monitoring**
 
-   - **Grafana**: The Docker setup includes a basic Grafana configuration to monitor model metrics. Go to the dashboards section in Grafana and look for the Model Drift Monitoring Dashboard.
+   - **Grafana**: The Docker setup includes a basic Grafana configuration to monitor model metrics. Go to the dashboards section in Grafana and look for the Model Drift Monitoring Dashboard. The alert is activated when the metric reachs the 0.5 threshold.
    - **Prometheus**: The setup includes Prometheus for collecting and storing metrics. 
 
 4. **Testing the Endpoint**
@@ -252,6 +252,19 @@ To delete the CloudFormation stack and the associated resources, run:
 ```bash
 aws cloudformation delete-stack --stack-name MyDockerAppStack
 ```
+
+## How to Use the Makefile
+- **Prepare the Dataset**: Run `make prepare_data` to clean and prepare the dataset.
+- **Train the Model**: Run `make train_model` to train the LSTM model.
+- **Register the Best Model**: Run `make register_model` to register the best model with MLflow.
+- **Docker Management**:
+  - **Start Docker Containers**: Run `make docker_up` to build and start the Docker containers.
+  - **Stop Docker Containers**: Run `make docker_down` to stop and remove the Docker containers.
+- **Deploy to AWS**:
+  - **Deploy Application**: Run `make deploy_cloud` to deploy the Dockerized application to an AWS EC2 instance using CloudFormation.
+  - **Delete Stack**: Run `make delete_cloud` to delete the CloudFormation stack.
+
+This `Makefile` streamlines the process of managing this project, whether the app is working locally, managing Docker containers, or deploying the application to AWS.
 
 ## Requirements
 
