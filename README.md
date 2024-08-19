@@ -213,7 +213,7 @@ You can deploy this Dockerized application on an Amazon EC2 instance using an AW
    In the `cloudformation` section of the repository, locate the `aws_ec2_cloud-docker-app.yaml` template and modify the following placeholders:
    
    - Replace `your-key-name` with the name of your EC2 key pair.
-   - Replace the GitHub repository URL (`https://github.com/your-github-username/your-repo.git`) with your actual GitHub repository URL.
+   - Replace the GitHub repository URL (`https://github.com/arismendyl97/classifying-gender-by-name.git`) with your actual GitHub repository URL in case you need it.
 
 3. **Deploy the CloudFormation Stack**
 
