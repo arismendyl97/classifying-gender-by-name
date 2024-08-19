@@ -119,8 +119,10 @@ The project is organized into three main folders:
 
       - **Flask API:** Provides a REST API for predictions:
          - **`/predict`**: Accepts POST requests with a name, processes it, and returns gender predictions.
-         - **`/drift_report`**: Returns a data drift report (assumes it's configured).
+         - **`/drift_report`**: Returns a data drift report.
       - **Data Drift Monitoring:** Uses Evidently to monitor data drift, although it's not directly exposed through the API in this code.
+      ![Grafana Monitoring Dashboard](images/Grafana Dashboard.png)
+
       - **Multithreaded Execution:** Runs the Flask app in a separate thread to ensure non-blocking operations.
       - **Application Execution:** Uses Prefect to orchestrate the loading of the model and starting of the Flask application.
 
