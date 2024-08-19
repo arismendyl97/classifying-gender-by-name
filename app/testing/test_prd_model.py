@@ -27,4 +27,4 @@ with open(csv_file_path, newline='') as csvfile:
             print(response.json())  # Or response.text if the response is not JSON
             
             # Wait for 1 second before processing the next row
-            time.sleep(0.05)
+            time.sleep(0.5)

@@ -68,14 +68,19 @@ def create_flask_app(model, tokenizer, max_sequence_length):
         # Run the report on the current data
         report.run(reference_data=reference_data, current_data=current_data)
 
+        print(f"count: rd; {len(reference_data)}, cd; {len(current_data)}")
+
         # Inspect the structure of the report
         report_dict = report.as_dict()
+        print("report_dict")
+        print(report_dict)
 
         # Extract metrics from the report and update Prometheus metrics
-        dataset_drift_metric_value = report.as_dict()["metrics"][0]["result"]["drift_share"]
-        Column_drift_metric_value = report.as_dict()["metrics"][1]["result"]["drift_score"]
+        #dataset_drift_metric_value = report.as_dict()["metrics"][0]["result"]["drift_share"]
+        #Column_drift_metric_value = report.as_dict()["metrics"][1]["result"]["drift_score"]
+        Column_drift_metric_value = report.as_dict()["metrics"][0]["result"]["drift_score"]
 
-        data_drift_metric.set(dataset_drift_metric_value)
+        #data_drift_metric.set(dataset_drift_metric_value)
         column_drift_metric.set(Column_drift_metric_value)
 
         # Return the Prometheus metrics as a Flask response
@@ -107,13 +112,13 @@ if __name__ == "__main__":
     registry = CollectorRegistry()
 
     # Define Prometheus metrics (e.g., for data drift)
-    data_drift_metric = Gauge('data_drift_score', 'Data drift score', registry=registry)
+    #data_drift_metric = Gauge('data_drift_score', 'Data drift score', registry=registry)
     column_drift_metric = Gauge('column_drift_score', 'Column drift score', registry=registry)
 
     # Initialize an Evidently report focusing on data quality and drift
     report = Report(
         metrics=[
-            DatasetDriftMetric(),
+            #DatasetDriftMetric(),
             ColumnDriftMetric(column_name="predicted_gender"),
         ]
     )
