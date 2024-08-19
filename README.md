@@ -1,8 +1,10 @@
 # Name-Based Gender Classification Project
 
+
 ## Project Overview
 
 This project aims to classify the gender of individuals based on their Spanish names using a Long Short-Term Memory (LSTM) neural network. This model is particularly useful for filling in missing gender information in large customer databases, such as those of a mall's customer database. By accurately predicting the gender from names, businesses can enhance their data quality and make more informed decisions based on gender-related insights.
+
 
 ## Problem Explanation
 
@@ -18,7 +20,19 @@ The objective of this project is to develop a machine learning model that can pr
 
 LSTM is a type of recurrent neural network (RNN) that is well-suited for sequence prediction problems. Unlike traditional neural networks, LSTMs can learn and retain long-term dependencies, making them ideal for tasks where the order and context of the input data matter. In this case, LSTM is used to analyze the sequence of characters in a name and predict the corresponding gender.
 
-### Workflow
+### Practical Applications
+
+1. **Data Enrichment**:
+   - Automatically fill in missing gender information in customer databases, improving data quality.
+
+2. **Personalized Marketing**:
+   - Enable more targeted marketing campaigns based on gender, increasing engagement and conversion rates.
+
+3. **Demographic Analysis**:
+   - Perform more accurate demographic analyses, helping businesses understand their customer base better and make informed strategic decisions.
+
+
+## Workflow
 
 1. **Data Preparation**: 
    - The project starts with a dataset containing Spanish names and their associated genders.
@@ -31,22 +45,13 @@ LSTM is a type of recurrent neural network (RNN) that is well-suited for sequenc
    - After training, the model is evaluated on the validation and testing datasets to ensure it performs well and generalizes to new data.
 
 4. **Model Deployment**:
-   - The best-performing model is saved and can be used to predict the gender of new names. This is particularly useful for completing missing gender information in customer databases.
+   - The best-performing model is registered and can be used to predict the gender of new names. This is particularly useful for completing missing gender information in customer databases.
+   You will find the instructions to run the model either locally or deploying to the AWS cloud.
 
-## Practical Applications
-
-1. **Data Enrichment**:
-   - Automatically fill in missing gender information in customer databases, improving data quality.
-
-2. **Personalized Marketing**:
-   - Enable more targeted marketing campaigns based on gender, increasing engagement and conversion rates.
-
-3. **Demographic Analysis**:
-   - Perform more accurate demographic analyses, helping businesses understand their customer base better and make informed strategic decisions.
 
 ## Project Structure
 
-The project is organized into three main folders:
+The project is organized into several key folders:
 
 1. **dataset**
    - Contains six files with Spanish names and their corresponding gender. These files are used to build and validate the model.
@@ -57,12 +62,22 @@ The project is organized into three main folders:
      - `spanish names db - validation.csv`
      - `spanish names db - testing.csv`
      - `spanish names db - post_testing.csv`
-   - This script ensures the dataset is clean and properly formatted for training, validation, and testing.
-   Note: post_testing dataset is for app final testing purposes.
+   - This script ensures the dataset is clean and properly formatted for training, validation, and testing. 
+   **Note:** The `post_testing.csv` dataset is used for final testing purposes.
 
 3. **training**
-   - Contains the `training_model.py` file which is responsible for training the LSTM model. The training process is managed and tracked using MLflow.
-   - Once the training is complete, the best model is registered using the MLflow API in the `best_model.py` file. 
+   - Contains the `training_model.py` file, responsible for training the LSTM model that classifies gender based on names.
+   - The training process is managed and tracked using MLflow. Once training is complete, the best model is registered using the MLflow API in the `best_model.py` file.
+
+4. **app**
+   - Contains the `flow.py` file, which runs the model as a Flask application.
+   - The application integrates with Prometheus and Grafana for monitoring model performance.
+   - The repo root includes all necessary Docker components (`Dockerfile`, `docker-compose.yml`) to containerize and run the application.
+
+5. **CloudFormation**
+   - Contains a CloudFormation template (`aws_ec2_cloud-docker-app.yaml`) that automates the deployment of the Dockerized application to an EC2 instance.
+   - This template provisions the necessary AWS infrastructure, installs Docker and Docker Compose on the EC2 instance, and deploys the application.
+
 
 ## Installation
 
@@ -101,6 +116,7 @@ The project is organized into three main folders:
    pip install -r requirements.txt
    ```
 
+
 ## How to Use
 
 1. **Prepare the Dataset**
@@ -116,7 +132,7 @@ The project is organized into three main folders:
 
 4. **Model Serving with Flask, Prefect and Evidently `flow.py`**
 
-   - The `flow.py` sets up a model serving application using **Flask**, **MLflow**, **Prefect** for the workflow orchestration, and **Evidently** for monitoring. The service predicts gender based on names using the LSTM model registered in MLflow and includes a data drift monitoring feature.
+   - The `flow.py` sets up a model serving application using **Flask**, **MLflow**, **Prefect** for the workflow orchestration, and **Evidently** for monitoring **(DO NOT RUN THIS SCRIPT, FOLLOW THE DOCKER INSTRUCTIONS BELOW)**. The service predicts gender based on names using the LSTM model registered in MLflow and includes a data drift monitoring feature.
 
       - **Flask API:** Provides a REST API for predictions:
          - **`/predict`**: Accepts POST requests with a name, processes it, and returns gender predictions.
@@ -129,13 +145,13 @@ The project is organized into three main folders:
       - **Application Orchestration:** Uses **Prefect** to orchestrate the loading of the model and starting of the Flask application.
 
 
-### **Installation and locally Running - DOCKER**
+## **Installation and locally Running - DOCKER**
 
 This project is Dockerized and includes all necessary Python dependencies, as well as Grafana and Prometheus for monitoring model performance. Follow these steps to set up and run the application:
 
 1. **Build and Run the Docker Containers**
 
-   Once you have downloaded the repo as described before, go to the folder root and follow these instructions:
+   Once you have downloaded the repo as described before, go to the repo root and follow these instructions:
 
    Use Docker Compose to build and start the containers. This will install all Python dependencies and set up Grafana and Prometheus.
 
@@ -159,7 +175,7 @@ This project is Dockerized and includes all necessary Python dependencies, as we
 
 3. **Monitoring**
 
-   - **Grafana**: The Docker setup includes a basic Grafana configuration to monitor model metrics.
+   - **Grafana**: The Docker setup includes a basic Grafana configuration to monitor model metrics. Go to the dashboards section in Grafana and look for the Model Drift Monitoring Dashboard.
    - **Prometheus**: The setup includes Prometheus for collecting and storing metrics. 
 
 4. **Testing the Endpoint**
@@ -171,10 +187,11 @@ This project is Dockerized and includes all necessary Python dependencies, as we
    ```sh
    curl -X POST http://localhost:4500/predict \
    -H "Content-Type: application/json" \
-   -d '{"name": "Luis"}'
+   -d '{"name": "Santiago"}'
    ```
 
-### **CLOUD - Deploying the Application on an AWS EC2 Instance Using CloudFormation**
+
+## **CLOUD - Deploying the Application on an AWS EC2 Instance Using CloudFormation**
 
 You can deploy this Dockerized application on an Amazon EC2 instance using an AWS CloudFormation stack. Follow these steps to set up and run the application in the cloud.
 
