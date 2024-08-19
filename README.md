@@ -58,6 +58,7 @@ The project is organized into three main folders:
      - `spanish names db - testing.csv`
      - `spanish names db - post_testing.csv`
    - This script ensures the dataset is clean and properly formatted for training, validation, and testing.
+   Note: post_testing dataset is for app final testing purposes.
 
 3. **training**
    - Contains the `training_model.py` file which is responsible for training the LSTM model. The training process is managed and tracked using MLflow.
@@ -120,12 +121,12 @@ The project is organized into three main folders:
       - **Flask API:** Provides a REST API for predictions:
          - **`/predict`**: Accepts POST requests with a name, processes it, and returns gender predictions.
          - **`/drift_report`**: Returns a data drift report.
-      - **Data Drift Monitoring:** Uses Evidently to monitor data drift, although it's not directly exposed through the API in this code.
+      - **Data Drift Monitoring:** Uses Evidently to monitor data drift.
       
       ![Grafana Monitoring Dashboard](images/GrafanaDashboard.png)
 
       - **Multithreaded Execution:** Runs the Flask app in a separate thread to ensure non-blocking operations.
-      - **Application Execution:** Uses Prefect to orchestrate the loading of the model and starting of the Flask application.
+      - **Application Orchestration:** Uses Prefect to orchestrate the loading of the model and starting of the Flask application.
 
 
 ### **Installation and Running - DOCKER**
@@ -152,12 +153,12 @@ This project is Dockerized and includes all necessary Python dependencies, as we
    - Grafana will be available at `http://localhost:3000` (default credentials: admin/admin).
    - Prometheus will be available at `http://localhost:9090`.
 
+   ![Docker App Components](images/DockerApp.png)
+
 3. **Monitoring**
 
    - **Grafana**: The Docker setup includes a basic Grafana configuration to monitor model metrics.
    - **Prometheus**: The setup includes Prometheus for collecting and storing metrics. 
-
-   Ensure that Grafana and Prometheus are correctly configured to visualize the data from your model.
 
 4. **Testing the Endpoint**
 

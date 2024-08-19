@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36" version="24.7.7">
+  <diagram name="Page-1" id="myDiagram">
+    <mxGraphModel dx="836" dy="434" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#007FFF;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="70" width="640" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFF00;strokeColor=#000000;shape=image;labelBackgroundColor=default;verticalAlign=top;verticalLabelPosition=bottom;sketch=0;aspect=fixed;points=[];image=img/lib/mscae/Docker.svg;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="595" y="80" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="315" y="176.25" width="140" height="107.5" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-10" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Prometheus_software_logo.svg/1200px-Prometheus_software_logo.svg.png;" vertex="1" parent="1">
+          <mxGeometry x="346.27000000000004" y="194.09000000000003" width="77.46" height="76.82" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-11" value="&lt;h3&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;Prometheus&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;http://localhost:9090&lt;/span&gt;&lt;/h3&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="350" y="293.75" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-18" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;fillColor=#008a00;fillStyle=solid;strokeColor=#005700;" edge="1" parent="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="250" y="231.97" as="sourcePoint" />
+            <mxPoint x="310" y="231.97" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-21" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;fillColor=#008a00;fillStyle=solid;strokeColor=#005700;" edge="1" parent="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="460" y="231.97" as="sourcePoint" />
+            <mxPoint x="520" y="231.97" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-23" value="&lt;h3&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;Grafana&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;http://localhost:3000&lt;/span&gt;&lt;/h3&gt;&lt;div&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="560" y="300" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-24" value="&lt;h3&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;Application&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;http://localhost:4500&lt;/span&gt;&lt;/h3&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="133.32999999999998" y="293.75" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-9" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://blog.appseed.us/content/images/2023/10/cover-flask.jpg;" vertex="1" parent="1">
+          <mxGeometry x="95.00000000000003" y="176.25" width="146.66" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-32" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="315" y="176.25" width="140" height="107.5" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" connectable="0" parent="8A-E_Hlg5li_jr8y55Dv-32">
+          <mxGeometry width="140" height="107.5" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-31" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Prometheus_software_logo.svg/1200px-Prometheus_software_logo.svg.png;" vertex="1" parent="8A-E_Hlg5li_jr8y55Dv-32">
+          <mxGeometry x="31.27000000000004" y="17.840000000000032" width="77.46" height="76.82" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-33" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="525" y="178.75" width="140" height="107.5" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" connectable="0" parent="8A-E_Hlg5li_jr8y55Dv-33">
+          <mxGeometry width="140" height="107.5" as="geometry" />
+        </mxCell>
+        <mxCell id="8A-E_Hlg5li_jr8y55Dv-14" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://cdn.worldvectorlogo.com/logos/grafana.svg;" vertex="1" parent="8A-E_Hlg5li_jr8y55Dv-33">
+          <mxGeometry x="32.15999999999997" y="11.699999999999989" width="75.68" height="84.09" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
