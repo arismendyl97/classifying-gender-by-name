@@ -114,9 +114,9 @@ The project is organized into three main folders:
 3. **Retrieve the Best Model**
    - After training, run the `best_model.py` script to retrieve and save the best-performing model using the MLflow API.
 
-4. **Model Serving with Flask and Evidently `flow.py`**
+4. **Model Serving with Flask, Prefect and Evidently `flow.py`**
 
-   - The `flow.py` sets up a model serving application using Flask, MLflow, and Evidently for monitoring. The service predicts gender based on names using the LSTM model registered in MLflow and includes a data drift monitoring feature.
+   - The `flow.py` sets up a model serving application using **Flask**, **MLflow**, **Prefect** for the workflow orchestration, and **Evidently** for monitoring. The service predicts gender based on names using the LSTM model registered in MLflow and includes a data drift monitoring feature.
 
       - **Flask API:** Provides a REST API for predictions:
          - **`/predict`**: Accepts POST requests with a name, processes it, and returns gender predictions.
@@ -126,14 +126,16 @@ The project is organized into three main folders:
       ![Grafana Monitoring Dashboard](images/GrafanaDashboard.png)
 
       - **Multithreaded Execution:** Runs the Flask app in a separate thread to ensure non-blocking operations.
-      - **Application Orchestration:** Uses Prefect to orchestrate the loading of the model and starting of the Flask application.
+      - **Application Orchestration:** Uses **Prefect** to orchestrate the loading of the model and starting of the Flask application.
 
 
-### **Installation and Running - DOCKER**
+### **Installation and locally Running - DOCKER**
 
 This project is Dockerized and includes all necessary Python dependencies, as well as Grafana and Prometheus for monitoring model performance. Follow these steps to set up and run the application:
 
 1. **Build and Run the Docker Containers**
+
+   Once you have downloaded the repo as described before, go to the folder root and follow these instructions:
 
    Use Docker Compose to build and start the containers. This will install all Python dependencies and set up Grafana and Prometheus.
 
